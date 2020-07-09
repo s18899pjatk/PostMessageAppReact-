@@ -1,47 +1,6 @@
-import React, { Fragment, useState, useEffect } from "react";
-const PostsArea = () => {
-  const [arr, setArray] = useState([]);
+import React, { useState } from "react";
+const PostsArea = ({ updateHandler, deleteHandler, arr }) => {
   const [txt_content, setText] = useState("");
-
-  const deleteHandler = async (id) => {
-    try {
-      const deletePost = await fetch(`http://localhost:5003/posts/${id}`, {
-        method: "DELETE",
-      });
-      console.log(deletePost);
-      setArray(arr.filter((arr) => arr.post_id !== id));
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
-
-  const updateHandler = async (id) => {
-    try {
-      const body = { txt_content };
-      const response = await fetch(`http://localhost:5003/posts/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const getPosts = async () => {
-    try {
-      const response = await fetch("http://localhost:5003/posts");
-      const jsonData = await response.json();
-      setArray(jsonData);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
-
-  useEffect(() => {
-    getPosts();
-  }, []);
 
   let posts = arr
     .slice(0)
@@ -68,7 +27,7 @@ const PostsArea = () => {
           className="btn btn-info rouded btn-variant-2"
           onClick={(e) => {
             e.preventDefault();
-            updateHandler(post.post_id);
+            updateHandler(post.post_id, { txt_content });
           }}
         >
           Edit
@@ -77,11 +36,9 @@ const PostsArea = () => {
     ));
 
   return (
-    <Fragment>
       <div className="posts">
         <form>{posts}</form>
       </div>
-    </Fragment>
   );
 };
 export default PostsArea;
