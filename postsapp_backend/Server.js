@@ -4,6 +4,7 @@ const port = 5003;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
+var serveStatic = require('serve-static');
 
 // middleware
 app.use(cors());
