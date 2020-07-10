@@ -1,11 +1,10 @@
 const express = require("express");
 const apiRoute = require("./routes/api");
-const port = 5003;
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
-var serveStatic = require('serve-static');
-
+const path = require("path");
+const PORT = process.env.PORT || 5003;
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -14,6 +13,10 @@ app.use(
     extended: true,
   })
 );
+
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static(path.join(__dirname,"postsapp/public")))
+}
 app.use("/api", apiRoute);
 
-app.listen(port, () => console.log(`listeting ${port}`));
+app.listen(PORT, () => console.log(`listeting ${PORT}`));
