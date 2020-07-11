@@ -9,9 +9,9 @@
   "main": "index.js",
   "scripts": {
     "server": "nodemon Server.js",
-    "heroku-postbuild": "cd postsapp && npm install --prefix --only=dev && npm install --prefix client && npm run build", 
+    "heroku-postbuild": "cd postsapp && npm install && npm run build", 
     "start": "node Server.js"
-  },
+    },
   "author": "",
   "license": "ISC",
   "dependencies": {
