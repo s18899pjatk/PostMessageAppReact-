@@ -3,7 +3,6 @@ const apiRoute = require("./routes/api");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
-const path = require("path");
 const PORT = process.env.PORT || 5003;
 // middleware
 app.use(cors());
@@ -13,10 +12,15 @@ app.use(
     extended: true,
   })
 );
-
-if(process.env.NODE_ENV === "production"){
-  app.use(express.static(path.join(__dirname,"postsapp/public")))
-}
 app.use("/api", apiRoute);
 
-app.listen(PORT, () => console.log(`listeting ${PORT}`));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("./postsapp/build"));
+
+  const path = require("path");
+  app.get("*", function (req, res) {
+    res.send(path.resolve(__dirname, "postapp", "build", "index.html"));
+  });
+}
+
+app.listen(PORT, () => console.log(`listening ${PORT}`));

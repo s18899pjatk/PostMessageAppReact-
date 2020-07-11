@@ -8,14 +8,16 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon Server.js"
+    "server": "nodemon Server.js",
+    "heroku-postbuild": "cd postsapp && npm install --prefix --only=dev && npm install --prefix client && npm run build", 
+    "start": "node Server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "knex": "^0.21.1",
     "pg": "^8.3.0",
