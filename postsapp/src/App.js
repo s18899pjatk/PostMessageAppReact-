@@ -9,7 +9,7 @@ function App() {
   const addHandler = async ({ txt_content }) => {
     try {
       const body = { txt_content };
-      const response = await fetch("http://localhost:5003/api/posts/", {
+      const response = await fetch("/api/posts/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -23,7 +23,7 @@ function App() {
 
   const deleteHandler = async (id) => {
     try {
-      const deletePost = await fetch(`http://localhost:5003/api/posts/${id}`, {
+      const deletePost = await fetch(`/api/posts/${id}`, {
         method: "DELETE",
       });
       console.log(deletePost);
@@ -37,7 +37,7 @@ function App() {
     try {
       if (txt_content === "") return;
       const body = { txt_content };
-      const response = await fetch(`http://localhost:5003/api/posts/${id}`, {
+      const response = await fetch(`/api/posts/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -50,7 +50,7 @@ function App() {
 
   const getPosts = async () => {
     try {
-      const response = await fetch("http://localhost:5003/api/posts/");
+      const response = await fetch("/api/posts/");
       const jsonData = await response.json();
       setArray(jsonData);
     } catch (error) {
