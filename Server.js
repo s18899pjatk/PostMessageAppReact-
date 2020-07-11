@@ -13,10 +13,9 @@ app.use(
   })
 );
 app.use("/api", apiRoute);
+app.use(express.static("./postsapp/build"));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("./postsapp/build"));
-
   const path = require("path");
   app.get("*", function (req, res) {
     res.send(path.resolve(__dirname, "postapp", "build", "index.html"));
