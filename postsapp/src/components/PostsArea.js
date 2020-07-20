@@ -70,6 +70,10 @@ const PostsArea = ({ updateHandler, deleteHandler, arr }) => {
         >
           Edit
         </Button>
+        <Grid container>
+
+        <h3>{}</h3>
+        </Grid>
       </Grid>
     ));
 

@@ -15,11 +15,11 @@ app.use(
 app.use("/api", apiRoute);
 app.use(express.static("./postsapp/build"));
 
-if (process.env.NODE_ENV === "production") {
+
   const path = require("path");
   app.get("*", function (req, res) {
-    res.send(path.resolve(__dirname, "postapp", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "postsapp", "build", "index.html"));
   });
-}
+
 
 app.listen(PORT, () => console.log(`listening ${PORT}`));
