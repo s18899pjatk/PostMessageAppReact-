@@ -1,5 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
 import {
   AppBar,
   Toolbar,
@@ -87,18 +86,3 @@ const Header = ({ setAuth }) => {
 };
 
 export default Header;
-=======
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
-
-const Header = () => {
-    return(
-        <AppBar position="static">
-            <Toolbar>
-                <Typography>POSTS</Typography>
-            </Toolbar>
-        </AppBar>
-    )
-}
-
-export default Header;
->>>>>>> 5f5ffb817ca11d3bf831f8cf7f2955f441de7802

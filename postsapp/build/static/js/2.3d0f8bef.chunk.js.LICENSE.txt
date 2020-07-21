@@ -4,15 +4,12 @@ object-assign
 @license MIT
 */
 
-<<<<<<< HEAD:postsapp/build/static/js/2.260f3c74.chunk.js.LICENSE.txt
 /*!
   Copyright (c) 2017 Jed Watson.
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */
 
-=======
->>>>>>> 5f5ffb817ca11d3bf831f8cf7f2955f441de7802:postsapp/build/static/js/2.9b2a9c8a.chunk.js.LICENSE.txt
 /**
  * A better abstraction over CSS.
  *
