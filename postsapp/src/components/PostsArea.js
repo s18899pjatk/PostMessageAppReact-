@@ -89,40 +89,6 @@ const PostsArea = ({ updateHandler, deleteHandler, arr }) => {
             Edit
           </Button>
         </Box>
-        <TextField
-          id={`id${post.post_id}`}
-          multiline
-          variant="outlined"
-          rows={8}
-          defaultValue={post.txt_content}
-          xs={8}
-          fullWidth
-          onChange={(e) => setText(e.currentTarget.value)}
-        />
-
-        <IconButton
-          className={classes.deleteButton}
-          aria-label="delete"
-          color="secondary"
-          onClick={(e) => {
-            e.preventDefault();
-            deleteHandler(post.post_id);
-          }}
-        >
-          <DeleteIcon />
-        </IconButton>
-
-        <Button
-          className={classes.updateButton}
-          variant="outlined"
-          color="primary"
-          onClick={(e) => {
-            e.preventDefault();
-            updateHandler(post.post_id, { txt_content });
-          }}
-        >
-          Edit
-        </Button>
       </Grid>
     ));
 
