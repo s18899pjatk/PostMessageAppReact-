@@ -4,10 +4,12 @@ import InputArea from "./InputArea";
 import PostsArea from "./PostsArea";
 import { Grid } from "@material-ui/core";
 import Header from "./Header";
+import { toast } from "react-toastify";
 
 const Dashboard = ({ setAuth }) => {
   const [arr, setArray] = useState([]);
   const [name, setName] = useState("");
+  const [usr_id, setId] = useState("");
 
   const getName = async () => {
     try {
@@ -17,6 +19,7 @@ const Dashboard = ({ setAuth }) => {
       });
       const parseRes = await response.json();
       setName(parseRes.user_name);
+      setId(parseRes.user_id);
     } catch (error) {
       console.error(error.message);
     }
@@ -26,17 +29,16 @@ const Dashboard = ({ setAuth }) => {
     getName();
   });
 
-  const addHandler = async ({ txt_content }) => {
+  const addHandler = async ({ txt_content }, post_date, user_id) => {
     try {
       if (txt_content === "") return;
-      const body = { txt_content };
-      const response = await fetch("/api/posts/", {
+      const body = { txt_content, post_date, user_id };
+      await fetch("/api/posts/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       getPosts();
-      console.log(response);
     } catch (error) {
       console.error(error.message);
     }
@@ -44,11 +46,19 @@ const Dashboard = ({ setAuth }) => {
 
   const deleteHandler = async (id) => {
     try {
-      const deletePost = await fetch(`/api/posts/${id}`, {
+      const getPost = await fetch(`/api/posts/${id}`, {
+        method: "GET",
+      });
+      const parseRes = await getPost.json();
+      if (parseRes[0].user_id !== usr_id) {
+        toast.error("cannot delete someone's post");
+        return;
+      }
+      await fetch(`/api/posts/${id}`, {
         method: "DELETE",
       });
-      console.log(deletePost);
       setArray(arr.filter((arr) => arr.post_id !== id));
+      toast.info("deleted");
     } catch (error) {
       console.error(error.message);
     }
@@ -56,14 +66,22 @@ const Dashboard = ({ setAuth }) => {
 
   const updateHandler = async (id, { txt_content }) => {
     try {
+      const getPost = await fetch(`/api/posts/${id}`, {
+        method: "GET",
+      });
+      const parseRes = await getPost.json();
+      if (parseRes[0].user_id !== usr_id) {
+        toast.error("cannot edit someone's post");
+        return;
+      }
       if (txt_content === "") return;
       const body = { txt_content };
-      const response = await fetch(`/api/posts/${id}`, {
+      await fetch(`/api/posts/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      console.log(response);
+      toast.info("updated");
     } catch (error) {
       console.log(error.message);
     }
@@ -89,14 +107,14 @@ const Dashboard = ({ setAuth }) => {
         <Header setAuth={setAuth} />
       </Grid>
       <Grid item container>
-      <Grid item xs={1} />
+        <Grid item xs={1} />
 
         <h2>Welcome: {name}</h2>
       </Grid>
       <Grid item container>
         <Grid item xs={2} />
         <Grid item xs={8}>
-          <InputArea addHandler={addHandler} />
+          <InputArea addHandler={addHandler} id={usr_id} />
           <PostsArea
             deleteHandler={deleteHandler}
             updateHandler={updateHandler}

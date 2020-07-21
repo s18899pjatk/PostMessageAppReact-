@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
       .returning("*")
       .into("post")
       .then((data) => {
-        res.send(data);
+        res.json(data);
       });
   } catch (error) {
     console.error(error.message);
@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
       .select()
       .from("post")
       .then((data) => {
-        res.send(data);
+        res.json(data);
       });
   } catch (error) {
     console.error(error.message);
@@ -39,7 +39,7 @@ router.get("/:id", async (req, res) => {
       .from("post")
       .where({ post_id: req.params.id })
       .then((data) => {
-        res.send(data);
+        res.json(data);
       });
   } catch (error) {
     console.error(error.message);
@@ -53,7 +53,7 @@ router.put("/:id", async (req, res) => {
       .update(req.body)
       .returning("*")
       .then((data) => {
-        res.send(data);
+        res.json(data);
       });
   } catch (error) {
     console.error(error.message);
@@ -67,7 +67,7 @@ router.delete("/:id", async (req, res) => {
       .delete(req.body)
       .returning("*")
       .then((data) => {
-        res.send(data);
+        res.json(data);
       });
   } catch (error) {
     console.error(error.message);

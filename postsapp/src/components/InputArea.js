@@ -17,13 +17,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InputArea = ({ addHandler }) => {
+const InputArea = ({ addHandler, id }) => {
   const [txt_content, setText] = useState("");
   const classes = useStyles();
+  const date = new Date().toLocaleString();
 
   const submitHandler = (e) => {
     e.preventDefault();
-    addHandler({ txt_content });
+    addHandler({ txt_content }, date, id);
   };
 
   return (

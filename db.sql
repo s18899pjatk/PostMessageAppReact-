@@ -3,7 +3,10 @@ CREATE DATABASE postsList;
 CREATE TABLE post
 (
     post_id SERIAL PRIMARY KEY,
-    txt_content VARCHAR(255)
+    txt_content varchar(255)  NOT NULL,
+    post_date timestamp  NOT NULL,
+    user_id UUID NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE users(
@@ -12,5 +15,4 @@ CREATE TABLE users(
     user_name VARCHAR(255) NOT NULL,
     user_email VARCHAR(255) NOT NULL,
     user_password VARCHAR(255) NOT NULL
-
 );

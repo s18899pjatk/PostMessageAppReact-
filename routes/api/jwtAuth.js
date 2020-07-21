@@ -12,12 +12,11 @@ router.post("/register", validInfo, async (req, res) => {
     const user = await db
       .select("*")
       .from("users")
-      .where({ user_email: email })
+      .where({ user_email: email });
 
-        if (user[0] !== undefined) {
-          return res.status(401).json("user already exists");
-        }
-     
+    if (user[0] !== undefined) {
+      return res.status(401).json("user already exists");
+    }
 
     const saltRound = 10;
     const salt = await bcrypt.genSalt(saltRound);
@@ -65,17 +64,31 @@ router.post("/login", validInfo, async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
-
   }
 });
 
-router.get("/is-verify", authorization ,async(req,res) => {
+router.get("/is-verify", authorization, async (req, res) => {
   try {
     res.json(true);
   } catch (error) {
     console.error(error.message);
     res.status(500).json("Server Error");
   }
-})
+});
+
+// get user with given id
+router.get("/:id", async (req, res) => {
+  try {
+    await db
+      .select()
+      .from("users")
+      .where({ user_id: req.params.id })
+      .then((data) => {
+        res.send(data);
+      });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 module.exports = router;
