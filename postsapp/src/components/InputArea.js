@@ -25,11 +25,13 @@ const InputArea = ({ addHandler, id }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     addHandler({ txt_content }, date, id);
+    setText("");
   };
 
   return (
     <Grid className={classes.writePost}>
       <TextField
+        className="txt"
         id="outlined-multiline-static"
         multiline
         variant="outlined"

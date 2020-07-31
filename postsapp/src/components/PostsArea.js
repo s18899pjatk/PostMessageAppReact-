@@ -24,20 +24,22 @@ const useStyles = makeStyles((theme) => ({
 const PostsArea = ({ updateHandler, deleteHandler, arr }) => {
   const [txt_content, setText] = useState("");
   const classes = useStyles();
-  const [m, setM] = useState("");
 
-  const getUserEmail = async function (id) {
+  const getUserEmail = async (id) => {
     try {
+      console.log(id);
       const response = await fetch(`/api/jwtAuth/${id}`, {
         method: "GET",
         headers: { token: localStorage.token },
       });
       const parseRes = await response.json();
-      let email = parseRes[0].user_email;
-      setM(email);
+      return new Promise((res, rej) => {
+        res(parseRes[0].user_email);
+      });
     } catch (error) {
       console.error(error.message);
     }
+    return null;
   };
 
   let posts = arr
@@ -47,11 +49,17 @@ const PostsArea = ({ updateHandler, deleteHandler, arr }) => {
       <Grid className={classes.container} key={post.post_id}>
         <Box borderTop={1} borderColor="primary.main">
           <Grid>
-            <h4>
-              {"Posted at " +
-                post.post_date
-                  .slice(0, post.post_date.length - 5)
-                  .replace(/T/, " ")}
+            <h4 id={`post_id${post.post_id}`}>
+              {"" +
+                getUserEmail(post.user_id).then((e) => {
+                  document.getElementById(`post_id${post.post_id}`).innerHTML =
+                    "Posted at " +
+                    post.post_date
+                      .slice(0, post.post_date.length - 5)
+                      .replace(/T/, " ") +
+                    " by " +
+                    e;
+                })}
             </h4>
           </Grid>
           <TextField
@@ -63,6 +71,7 @@ const PostsArea = ({ updateHandler, deleteHandler, arr }) => {
             xs={8}
             fullWidth
             onChange={(e) => setText(e.currentTarget.value)}
+            disabled
           />
 
           <IconButton

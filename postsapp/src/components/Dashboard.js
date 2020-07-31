@@ -74,7 +74,11 @@ const Dashboard = ({ setAuth }) => {
         toast.error("cannot edit someone's post");
         return;
       }
+
+      document.getElementById(`id${id}`).disabled = false;
+
       if (txt_content === "") return;
+
       const body = { txt_content };
       await fetch(`/api/posts/${id}`, {
         method: "PUT",
@@ -119,6 +123,7 @@ const Dashboard = ({ setAuth }) => {
             deleteHandler={deleteHandler}
             updateHandler={updateHandler}
             arr={arr}
+            usrId={usr_id}
           />
         </Grid>
         <Grid item xs={2} />
